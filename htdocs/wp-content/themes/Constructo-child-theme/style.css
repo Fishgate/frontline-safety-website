@@ -1,0 +1,9 @@
+/*
+Theme Name:     Fishgato
+Theme URI:      http://fishgate.co.za
+Description:    Child theme for the Constructo theme 
+Author:         Fishgate Advertising
+Template:       constructo
+Version:        1.0
+*/
+@import url("../constructo/style.css");
