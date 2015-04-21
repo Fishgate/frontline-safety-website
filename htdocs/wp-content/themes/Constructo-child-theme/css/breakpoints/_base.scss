@@ -1,0 +1,203 @@
+/**********************************************
+
+					CONTENTS
+
+1. HEADER STYLES
+	1.1 Top bar
+2. BODY STYLES
+	2.1 General
+	2.2 Seperator with Text
+	2.3 Tabs
+	2.4 Button 2
+	2.5 Twitter 
+	2.6 Alert
+	2.7 Progress
+	2.8 Table
+	2.9 Accordian/Toggle
+	2.10 Portfolio Slider
+3. FOOTER/SIDEBAR STYLES
+	3.1 Footer
+	3.2 Copyright
+
+**********************************************/
+
+/**********************************************
+
+			 1. HEADER STYLES
+
+**********************************************/
+
+/* 1.1 Top bar */
+
+
+
+
+/**********************************************
+
+			    2. BODY STYLES
+
+**********************************************/
+
+/* 2.1 General */
+h1, h2, h3, h4, h5, h6 {
+	@extend %uppercase;
+
+	&.center {
+		text-align: center;
+	}
+
+	&.white {
+		color: white;
+	}
+
+	&.lesspadding {
+		span {
+			padding: 0 20px 20px;
+		}
+	}
+}
+
+
+/* 2.2 Seperator with Text */
+.vc_separator h4 {	
+	//@extend %bold;
+}
+
+/* 2.3 Tabs */
+.nav-tabs > li > a {
+	@extend %uppercase;
+	//@extend %bold;
+}
+
+/* 2.4 Button 2 */
+.vc_btn, 
+a.vc_btn, 
+button.vc_btn {
+	@extend %uppercase;
+	@extend %economica-normal;
+}
+
+.vc_btn.gold, 
+a.vc_btn.gold, 
+button.vc_btn.gold {
+	background-color: $fl-gold;
+} 
+
+/* 2.5 Twitter */
+.btn,
+.wpcf7-submit {
+	@extend %noradius;
+}
+
+/* 2.6 Alert */
+.alert {
+	@extend %noradius;
+	@extend %uppercase;
+	//@extend %bold;
+
+	.close {
+		margin-top: -23px;
+	}
+}
+
+/* 2.7 Progress */
+.progress {
+	@extend %noradius;
+}
+
+/* 2.8 Table */
+.table thead tr th {
+	font-size: 22px;
+
+	&:first-child,
+	&:last-child {
+		@extend %noradius;
+	}
+}
+
+/* 2.9 Accordian/Toggle */
+.panel-group .panel-title a:before {
+	@extend %noradius;
+}
+
+/* 2.10 Portfolio Slider */
+.row.owly h2 {
+	font-size: 19px;
+}
+
+
+/**********************************************
+
+		   3. FOOTER/SIDEBAR STYLES
+
+**********************************************/
+
+/* 3.1 Footer */
+.site-footer div.textwidget {
+	img.logo-footer-img {
+		@extend %left;
+	}
+
+	p.footer-contact-txt {
+		@extend %right;
+		@extend %economica-normal;
+		text-align: right;
+
+		span {
+			color: $fl-gold;
+		}
+	}
+}
+
+.site-footer > .container {
+	padding-top: 40px;
+	padding-bottom: 10px;
+}
+
+/* 3.2 Copyright */
+.copyright-footer div.textwidget {
+	div.copyright-footer-txt {
+		@extend %economica-normal;
+		@extend %uppercase;
+		@extend %left;
+	}
+
+	nav.menu-footer_nav {
+		@extend %economica-normal;
+		@extend %uppercase;
+		@extend %right;
+
+		ul {
+			li {
+				display: inline;				
+			}
+		}
+	}
+}
+
+/* 3.3 Gravity Forms */
+.gform_wrapper {
+	margin-top: 0 !important;
+
+	h3.gform_title {
+		margin-top: 0 !important;
+		font-weight: 400 !important;
+	}
+
+	.top_label {
+		.gfield_label {
+			@extend %hide;
+		}
+	}
+
+	.ginput_complex label, 
+	.gfield_time_hour label, 
+	.gfield_time_minute label, 
+	.gfield_time_ampm label, 
+	.gfield_date_month label, 
+	.gfield_date_day label,
+	.gfield_date_year label,
+	.instruction {
+		@extend %hide;
+	}
+}
