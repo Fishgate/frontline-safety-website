@@ -1,16 +1,20 @@
-h1, h2, h3, h4, h5, h6, .nav-tabs > li > a, .vc_btn,
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=submit],
+.gform_wrapper .gform_footer input[type=image], h1, h2, h3, h4, h5, h6, .nav-tabs > li > a, .vc_btn,
 a.vc_btn,
 button.vc_btn, .alert, .copyright-footer div.textwidget div.copyright-footer-txt, .copyright-footer div.textwidget nav.menu-footer_nav {
   text-transform: uppercase !important; }
 
-.vc_btn,
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=submit],
+.gform_wrapper .gform_footer input[type=image], .vc_btn,
 a.vc_btn,
 button.vc_btn, .site-footer div.textwidget p.footer-contact-txt, .copyright-footer div.textwidget div.copyright-footer-txt, .copyright-footer div.textwidget nav.menu-footer_nav {
   font-family: 'Economica' !important;
   font-weight: 400 !important; }
 
 .btn,
-.wpcf7-submit, .alert, .progress, .table thead tr th:first-child, .table thead tr th:last-child, .panel-group .panel-title a:before {
+.wpcf7-submit, .alert, .progress, .table thead tr th:first-child, .table thead tr th:last-child, .panel-group .panel-title a:before, .vc_grid.vc_row .vc_grid-item .vc_btn {
   border-radius: 0 !important; }
 
 .gform_wrapper .top_label .gfield_label, .gform_wrapper .ginput_complex label,
@@ -29,6 +33,19 @@ button.vc_btn, .site-footer div.textwidget p.footer-contact-txt, .copyright-foot
 .site-footer div.textwidget p.footer-contact-txt, .copyright-footer div.textwidget nav.menu-footer_nav {
   float: right !important; }
 
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_footer input[type=submit],
+.gform_wrapper .gform_footer input[type=image] {
+  font-size: 100%;
+  background-color: #ba9e66;
+  color: #FFF;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none !important;
+  padding: 9px 12px;
+  line-height: 20px; }
+
 /**********************************************
 
 					CONTENTS
@@ -46,6 +63,7 @@ button.vc_btn, .site-footer div.textwidget p.footer-contact-txt, .copyright-foot
 	2.8 Table
 	2.9 Accordian/Toggle
 	2.10 Portfolio Slider
+	2.11 Post Grid
 3. FOOTER/SIDEBAR STYLES
 	3.1 Footer
 	3.2 Copyright
@@ -57,6 +75,24 @@ button.vc_btn, .site-footer div.textwidget p.footer-contact-txt, .copyright-foot
 
 **********************************************/
 /* 1.1 Top bar */
+.top-bar, .top-bar.style-2 {
+  height: auto !important; }
+  .top-bar .container ul li, .top-bar.style-2 .container ul li {
+    height: auto !important;
+    padding: 8px 13px;
+    font-size: 0.8em; }
+    .top-bar .container ul li div, .top-bar.style-2 .container ul li div {
+      height: auto !important;
+      padding: 0; }
+
+/* 1.2 Search */
+.nav-wrap .fa-search {
+  color: white; }
+
+/* 1.3 Page Heading */
+.page-heading {
+  padding: 8px 0 3px 0; }
+
 /**********************************************
 
 			    2. BODY STYLES
@@ -93,6 +129,10 @@ button.vc_btn.gold {
 .row.owly h2 {
   font-size: 19px; }
 
+/* 2.11 Post Grid */
+.vc_grid.vc_row .vc_grid-item .vc_btn {
+  background-color: #ba9e66; }
+
 /**********************************************
 
 		   3. FOOTER/SIDEBAR STYLES
@@ -118,5 +158,13 @@ button.vc_btn.gold {
   .gform_wrapper h3.gform_title {
     margin-top: 0 !important;
     font-weight: 400 !important; }
+  .gform_wrapper input[type=text],
+  .gform_wrapper input[type=url],
+  .gform_wrapper input[type=email],
+  .gform_wrapper input[type=tel],
+  .gform_wrapper input[type=number],
+  .gform_wrapper input[type=password],
+  .gform_wrapper textarea {
+    padding: .313em !important; }
 
 /*# sourceMappingURL=main.css.map */

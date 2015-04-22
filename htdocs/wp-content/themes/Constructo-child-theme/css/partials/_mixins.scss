@@ -1,3 +1,10 @@
+
+@mixin font($size, $weight, $color) {
+	font-size: $size !important;
+	font-weight: $weight !important;
+	color: $color !important;
+}
+
 %noborder { 
 	border-top: none !important;
 	border-right: none !important;
@@ -19,16 +26,24 @@
 	display: none !important;
 }
 
-@mixin font($size, $weight, $color) {
-	font-size: $size !important;
-	font-weight: $weight !important;
-	color: $color !important;
-}
-
 %left {
 	float: left !important;
 }
 
 %right {
 	float: right !important;
+}
+
+%fl-btn {
+	@extend %economica-normal;
+	@extend %uppercase;
+	font-size: 100%;
+	background-color: $fl-gold;
+	color: #FFF;
+	border: 0;
+	cursor: pointer;
+	display: inline-block;
+	text-decoration: none !important;
+	padding: 9px 12px;
+	line-height: 20px;
 }

@@ -15,6 +15,7 @@
 	2.8 Table
 	2.9 Accordian/Toggle
 	2.10 Portfolio Slider
+	2.11 Post Grid
 3. FOOTER/SIDEBAR STYLES
 	3.1 Footer
 	3.2 Copyright
@@ -28,8 +29,32 @@
 **********************************************/
 
 /* 1.1 Top bar */
+.top-bar, .top-bar.style-2 {
+	height: auto !important;
 
+	.container {
+		ul li {
+			height: auto !important;
+			padding: 8px 13px;
+			font-size: 0.8em;
 
+			div {
+				height: auto !important;
+				padding: 0;
+			}
+		}
+	}
+}
+
+/* 1.2 Search */
+.nav-wrap .fa-search {
+	color: white;
+}
+
+/* 1.3 Page Heading */
+.page-heading {
+	padding: 8px 0 3px 0;
+}
 
 
 /**********************************************
@@ -125,6 +150,11 @@ button.vc_btn.gold {
 	font-size: 19px;
 }
 
+/* 2.11 Post Grid */
+.vc_grid.vc_row .vc_grid-item .vc_btn {
+	background-color: $fl-gold;
+	@extend %noradius;
+}
 
 /**********************************************
 
@@ -200,4 +230,22 @@ button.vc_btn.gold {
 	.instruction {
 		@extend %hide;
 	}
+
+	input[type=text], 
+	input[type=url],
+	input[type=email], 
+	input[type=tel], 
+	input[type=number], 
+	input[type=password],
+	textarea {
+		padding: .313em !important;
+	}
+
+	.gform_footer {
+		input.button,
+		input[type=submit],
+		input[type=image] {
+			@extend %fl-btn;
+		}
+	} 
 }
