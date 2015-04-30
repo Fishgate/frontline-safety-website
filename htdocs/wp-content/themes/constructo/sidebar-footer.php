@@ -46,7 +46,7 @@ if(isset($anps_options_data['footer_columns'])&&$anps_options_data['footer_colum
             <?php elseif($footer_columns=='4' || $footer_columns=='0') : ?>
                 <div class="col-md-3 <?php echo esc_attr($footer_class); ?>"><ul><?php dynamic_sidebar( 'footer-1' ); ?></ul></div>
                 <div class="col-md-3 <?php echo esc_attr($footer_class); ?>"><ul><?php dynamic_sidebar( 'footer-2' ); ?></ul></div>
-                <div class="col-md-3 <?php echo esc_attr($footer_class); ?>"><ul><?php dynamic_sidebar( 'footer-3' ); ?></ul></div>
+                <div class="col-md-3 tablets-clear <?php echo esc_attr($footer_class); ?>"><ul><?php dynamic_sidebar( 'footer-3' ); ?></ul></div>
                 <div class="col-md-3 <?php echo esc_attr($footer_class); ?>"><ul><?php dynamic_sidebar( 'footer-4' ); ?></ul></div>
             <?php endif; ?>
 	</div>

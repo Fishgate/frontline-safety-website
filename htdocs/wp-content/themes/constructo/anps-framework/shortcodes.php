@@ -32,7 +32,7 @@ function anps_blog_func($atts, $content) {
     $posts = new WP_Query( $args );
 
     $pagination = array(
-    	'base' => @add_query_arg('page','%#%'),
+    	'base' => @esc_url(add_query_arg('page','%#%')),
     	'format' => '',
     	'total' => $posts->max_num_pages,
     	'current' => $current,
@@ -70,7 +70,7 @@ function anps_blog_func($atts, $content) {
             $post_text .= ob_get_clean();
         endwhile;   
         if( $wp_rewrite->using_permalinks() ) {
-            $pagination['base'] = user_trailingslashit( trailingslashit( remove_query_arg('s',get_pagenum_link(1) ) ) . 'page/%#%/', 'paged');
+            $pagination['base'] = user_trailingslashit( trailingslashit( esc_url(remove_query_arg('s',get_pagenum_link(1)) ) ) . 'page/%#%/', 'paged');
         }
         if( !empty($wp_query->query_vars['s']) ) {
             $pagination['add_args'] = array('s'=>get_query_var('s'));
@@ -103,7 +103,7 @@ function anps_recent_portfolio_slider_func($atts, $content) {
             array(
                 'taxonomy' => 'portfolio_category',
                 'field' => 'id',
-                'terms' => $category
+                'terms' => (int)$category
             )
        );
     }
@@ -177,7 +177,7 @@ function anps_recent_portfolio_func($atts, $content) {
             array(
                 'taxonomy' => 'portfolio_category',
                 'field' => 'id',
-                'terms' => $category
+                'terms' => (int)$category
             )
        );
     }
@@ -269,7 +269,7 @@ function anps_portfolio_func($atts, $content) {
             array(
                 'taxonomy' => 'portfolio_category',
                 'field' => 'id',
-                'terms' => $category
+                'terms' => (int)$category
             )
        );
     }
@@ -489,7 +489,7 @@ function anps_team_func($atts, $content) {
             array(
                 'taxonomy' => 'team_category',
                 'field' => 'id',
-                'terms' => $category
+                'terms' => (int)$category
             )
        );
     }
@@ -1196,6 +1196,91 @@ function remove_wpautop($content, $autop = false) {
   }
   return do_shortcode( shortcode_unautop($content) );
 }
+/* Google maps */
+$google_maps_counter = 0;
+function google_maps_advanced_func( $atts,  $content ) {
+    global $google_maps_counter;
+        $google_maps_counter++;
+        extract( shortcode_atts( array(
+                    'zoom'   => '15'
+        ), $atts ) ); 
+        preg_match_all( '#\](.*?)\[/google_maps_advanced_item]#', $content, $matches); 
+        $location = $matches[1][0]; 
+        wp_enqueue_script('gmap3_link');
+        wp_enqueue_script('gmap3');
+        return "<script>
+            jQuery(document).ready(function( $ ) { 
+                    $('#map$google_maps_counter').gmap3({
+                        map:{
+                            options:{  
+                                zoom: $zoom
+                            }
+                        },
+                        marker:{
+                          values:[
+                            ".do_shortcode($content)."
+                          ],
+                          options:{
+                            draggable: false
+                          },
+                          events: {
+                            mouseover: function(marker, event, context){
+                                var map = $(this).gmap3('get'),
+                                infowindow = $(this).gmap3({get:{name:'infowindow'}});
+                                if (infowindow){
+                                  infowindow.open(map, marker);
+                                  infowindow.setContent(context.data);
+                                } else {
+                                  $(this).gmap3({
+                                    infowindow:{
+                                      anchor:marker,
+                                      options:{content: context.data}
+                                    }
+                                  });
+                                }
+                              },
+                            mouseout: function(){
+                                var infowindow = $(this).gmap3({get:{name:'infowindow'}});
+                                if (infowindow){
+                                  infowindow.close();
+                                }
+                              }  
+                          }
+                        }, 
+                        getlatlng:{
+                            address: '".$location."',
+                            callback: function(results){ 
+                                if(!results) return;
+                                $(this).gmap3({
+                                    map:{
+                                        options: {
+                                            center: [results[0].geometry.location.lat(), results[0].geometry.location.lng()]
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });   
+                });
+            </script>
+            <div class='map' id='map$google_maps_counter'></div>";
+}
+add_shortcode('google_maps_advanced', 'google_maps_advanced_func');
+function anps_google_maps_advanced_item( $atts,  $content ) { 
+    extract( shortcode_atts( array(
+            'info' => '',
+            'pin' => ''
+        ), $atts ) ); 
+        $info = preg_replace('/[\n\r]+/', "", $info);
+        if(isset($pin) && $pin!="") {
+            $pin_icon = wp_get_attachment_image_src($pin, 'full');
+            $pin_icon = $pin_icon[0];
+        } else {
+            $pin_icon = get_template_directory_uri()."/images/gmap/map-pin.png";
+        }
+    return "{address: '$content', data:'".$info."', options:{icon:'$pin_icon'}},";
+}
+add_shortcode('google_maps_advanced_item', 'anps_google_maps_advanced_item');
 /* Section */
 function section_func($atts, $content) {
     return "<div class='container'>

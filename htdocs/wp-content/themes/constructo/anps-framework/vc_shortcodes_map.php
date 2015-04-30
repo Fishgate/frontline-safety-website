@@ -502,7 +502,49 @@ html_entity_decode("&#xf19e; ") . __("Yahoo", ANPS_TEMPLATE_LANG)=>"yahoo",
 html_entity_decode("&#xf157; ") . __("Yen ", ANPS_TEMPLATE_LANG)=>"yen ",
 html_entity_decode("&#xf167; ") . __("Youtube", ANPS_TEMPLATE_LANG)=>"youtube",
 html_entity_decode("&#xf16a; ") . __("Youtube play", ANPS_TEMPLATE_LANG)=>"youtube-play",
-html_entity_decode("&#xf166; ") . __("Youtube square", ANPS_TEMPLATE_LANG)=>"youtube-square"
+html_entity_decode("&#xf166; ") . __("Youtube square", ANPS_TEMPLATE_LANG)=>"youtube-square",
+/*4.3 update*/
+html_entity_decode("&#xf236; ") . __("Bed", ANPS_TEMPLATE_LANG)=>"Bed",
+html_entity_decode("&#xf20e; ") . __("Connect develop", ANPS_TEMPLATE_LANG)=>"connectdevelop",
+html_entity_decode("&#xf211; ") . __("forum bee", ANPS_TEMPLATE_LANG)=>"forumbee",
+html_entity_decode("&#xf222; ") . __("Male", ANPS_TEMPLATE_LANG)=>"male",
+html_entity_decode("&#xf22a; ") . __("Mars stroke", ANPS_TEMPLATE_LANG)=>"mars-stroke",
+html_entity_decode("&#xf22c; ") . __("Neuter", ANPS_TEMPLATE_LANG)=>"neuter",
+html_entity_decode("&#xf21a; ") . __("Ship", ANPS_TEMPLATE_LANG)=>"ship",
+html_entity_decode("&#xf21d; ") . __("Street view", ANPS_TEMPLATE_LANG)=>"street-view",
+html_entity_decode("&#xf225; ") . __("Transgender", ANPS_TEMPLATE_LANG)=>"transgender",
+html_entity_decode("&#xf221; ") . __("Female", ANPS_TEMPLATE_LANG)=>"female",
+html_entity_decode("&#xf232; ") . __("Whatsapp", ANPS_TEMPLATE_LANG)=>"whatsapp",
+html_entity_decode("&#xf20d; ") . __("Buysellads", ANPS_TEMPLATE_LANG)=>"buysellads",
+html_entity_decode("&#xf210; ") . __("Dashcube", ANPS_TEMPLATE_LANG)=>"dashcube",
+html_entity_decode("&#xf21e; ") . __("Heartbeat", ANPS_TEMPLATE_LANG)=>"heartbeat",
+html_entity_decode("&#xf227; ") . __("Mars double", ANPS_TEMPLATE_LANG)=>"mars-double",
+html_entity_decode("&#xf23a; ") . __("Medium", ANPS_TEMPLATE_LANG)=>"medium",
+html_entity_decode("&#xf231; ") . __("Pinterest", ANPS_TEMPLATE_LANG)=>"pinterest",
+html_entity_decode("&#xf214; ") . __("Shirtsinbulk", ANPS_TEMPLATE_LANG)=>"shirtsinbulk",
+html_entity_decode("&#xf239; ") . __("Subway", ANPS_TEMPLATE_LANG)=>"subway",
+html_entity_decode("&#xf234; ") . __("User plus", ANPS_TEMPLATE_LANG)=>"user-plus",
+html_entity_decode("&#xf226; ") . __("Venus double", ANPS_TEMPLATE_LANG)=>"venus-double",
+
+html_entity_decode("&#xf218; ") . __("Cart-arrow-down", ANPS_TEMPLATE_LANG)=>"cart-arrow-down",
+html_entity_decode("&#xf219; ") . __("Diamond", ANPS_TEMPLATE_LANG)=>"diamond",
+html_entity_decode("&#xf229; ") . __("Mars stroke ", ANPS_TEMPLATE_LANG)=>"mars-stroke ",
+html_entity_decode("&#xf223; ") . __("Mercury", ANPS_TEMPLATE_LANG)=>"mercury",
+html_entity_decode("&#xf213; ") . __("Sellsy", ANPS_TEMPLATE_LANG)=>"sellsy",
+html_entity_decode("&#xf215; ") . __("Simplybuilt", ANPS_TEMPLATE_LANG)=>"simplybuilt",
+html_entity_decode("&#xf238; ") . __("Train", ANPS_TEMPLATE_LANG)=>"train",
+html_entity_decode("&#xf21b; ") . __("User secret", ANPS_TEMPLATE_LANG)=>"user-secret",
+html_entity_decode("&#xf228; ") . __("Venus mars", ANPS_TEMPLATE_LANG)=>"venus-mars",
+html_entity_decode("&#xf217; ") . __("Cart plus", ANPS_TEMPLATE_LANG)=>"cart-plus",
+html_entity_decode("&#xf230; ") . __("Facebook official", ANPS_TEMPLATE_LANG)=>"facebook-official",
+html_entity_decode("&#xf212; ") . __("Leanpub", ANPS_TEMPLATE_LANG)=>"leanpub",
+html_entity_decode("&#xf22b; ") . __("Mars stroke", ANPS_TEMPLATE_LANG)=>"mars-stroke",
+html_entity_decode("&#xf21c; ") . __("Motorcycle", ANPS_TEMPLATE_LANG)=>"motorcycle",
+html_entity_decode("&#xf233; ") . __("Server", ANPS_TEMPLATE_LANG)=>"server",
+html_entity_decode("&#xf216; ") . __("Skyatlas", ANPS_TEMPLATE_LANG)=>"skyatlas",
+html_entity_decode("&#xf224; ") . __("Transgender", ANPS_TEMPLATE_LANG)=>"transgender",
+html_entity_decode("&#xf235; ") . __("User times", ANPS_TEMPLATE_LANG)=>"user-times",
+html_entity_decode("&#xf237; ") . __("Viacoin", ANPS_TEMPLATE_LANG)=>"viacoin"
 );
 
 /* Custom field for Table shortcode */
@@ -581,7 +623,7 @@ function table_field($settings, $value) {
 }
 add_shortcode_param('table' , 'table_field', get_template_directory_uri() . "/js/vc-table.js", __FILE__);
 /* Shortcodes */
-/* Logos */
+/* Testimonials */
 class WPBakeryShortCode_testimonials extends WPBakeryShortCodesContainer {
     static  function anps_testimonials_func( $atts,  $content ) {
         extract( shortcode_atts( array(
@@ -654,6 +696,98 @@ class WPBakeryShortCode_anps_testimonial extends WPBakeryShortCode {
 }
 add_shortcode('testimonial', array('WPBakeryShortCode_anps_testimonial','anps_testimonial_func'));
 /* END Testimonial */
+/* Google maps advanced */
+$google_maps_counter = 0;
+class WPBakeryShortCode_google_maps_advanced extends WPBakeryShortCodesContainer {
+    static function anps_google_maps_advanced_func( $atts,  $content ) {        
+        global $google_maps_counter;
+        $google_maps_counter++;
+        extract( shortcode_atts( array(
+                    'zoom'   => '15'
+        ), $atts ) ); 
+        preg_match_all( '#\](.*?)\[/google_maps_advanced_item]#', $content, $matches); 
+        $location = $matches[1][0]; 
+        wp_enqueue_script('gmap3_link');
+        wp_enqueue_script('gmap3');
+        return "<script>
+            jQuery(document).ready(function( $ ) { 
+                    $('#map$google_maps_counter').gmap3({
+                        map:{
+                            options:{  
+                                zoom: $zoom   
+                            }
+                        },
+                        marker:{
+                          values:[
+                            ".do_shortcode($content)."
+                          ],
+                          options:{
+                            draggable: false
+                          },
+                          events: {
+                            mouseover: function(marker, event, context){
+                                var map = $(this).gmap3('get'),
+                                infowindow = $(this).gmap3({get:{name:'infowindow'}});
+                                if (infowindow){
+                                  infowindow.open(map, marker);
+                                  infowindow.setContent(context.data);
+                                } else {
+                                  $(this).gmap3({
+                                    infowindow:{
+                                      anchor:marker,
+                                      options:{content: context.data}
+                                    }
+                                  });
+                                }
+                              },
+                            mouseout: function(){
+                                var infowindow = $(this).gmap3({get:{name:'infowindow'}});
+                                if (infowindow){
+                                  infowindow.close();
+                                }
+                              }  
+                          }
+                        }, 
+                        getlatlng:{
+                            address: '".$location."',
+                            callback: function(results){ 
+                                if(!results) return;
+                                $(this).gmap3({
+                                    map:{
+                                        options: {
+                                            center: [results[0].geometry.location.lat(), results[0].geometry.location.lng()]
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });   
+                });
+            </script>
+            <div class='map' id='map$google_maps_counter'></div>";
+    }
+}
+add_shortcode('google_maps_advanced', array('WPBakeryShortCode_google_maps_advanced','anps_google_maps_advanced_func'));
+/* END Google maps */
+/* Google maps advanced item */
+class WPBakeryShortCode_google_maps_advanced_item extends WPBakeryShortCode {
+    static function anps_google_maps_advanced_item_func( $atts,  $content ) { 
+        extract( shortcode_atts( array(
+            'info' => '',
+            'pin' => ''
+        ), $atts ) ); 
+        $info = preg_replace('/[\n\r]+/', "", $info);
+        if(isset($pin) && $pin!="") {
+            $pin_icon = wp_get_attachment_image_src($pin, 'full');
+            $pin_icon = $pin_icon[0];
+        } else {
+            $pin_icon = get_template_directory_uri()."/images/gmap/map-pin.png";
+        }
+        return "{address: '$content', data:'".$info."', options:{icon:'$pin_icon'}},";
+    }
+}
+add_shortcode('google_maps_advanced_item', array('WPBakeryShortCode_google_maps_advanced_item','anps_google_maps_advanced_item_func'));
+/* END Google maps item */
 /* Logos */
 class WPBakeryShortCode_logos extends WPBakeryShortCodesContainer {
     static function anps_logos_func( $atts,  $content ) { 
@@ -1946,6 +2080,59 @@ vc_map( array(
      )
 ) );
 /* END VC Google maps */
+/* VC Google maps advanced (as parent) */
+vc_map( array(
+   "name" => __("Google maps advanced", ANPS_TEMPLATE_LANG),
+   "base" => "google_maps_advanced",
+   "category" => ANPS_TEMPLATE_LANG,
+   "content_element" => true,
+   "is_container" => true,
+   "as_parent" => array('only' => 'google_maps_advanced_item'), 
+   "icon" => get_template_directory_uri()."/images/visual-composer/anpsicon_googlemaps.png",
+   "js_view" => 'VcColumnView',
+   "params" => array(
+       array(
+         "type" => "textfield",
+         "holder" => "div",
+         "class" => "",
+         "heading" => __("Zoom", ANPS_TEMPLATE_LANG),
+         "param_name" => "zoom",
+         "value" => "15", 
+         "description" => __("Enter zoom.", ANPS_TEMPLATE_LANG)
+       )
+     )
+) );
+/* END VC Google maps advanced */
+/* VC Google maps advanced item (as child) */
+vc_map( array(
+    "name" => __("Google maps advanced item", ANPS_TEMPLATE_LANG),
+    "base" => "google_maps_advanced_item",
+    "content_element" => true,
+    "category" => ANPS_TEMPLATE_LANG,
+    "icon" => get_template_directory_uri()."/images/visual-composer/anpsicon_googlemaps.png",
+    "as_child" => array('only' => 'google_maps_advanced'),
+    "params" => array(
+        array(
+            "type" => "textfield",
+            "heading" => __("Location", ANPS_TEMPLATE_LANG),
+            "param_name" => "content",
+            "description" => __("Enter address.", ANPS_TEMPLATE_LANG)
+        ),
+        array(
+            "type" => "attach_image",
+            "heading" => __("Pin", ANPS_TEMPLATE_LANG),
+            "param_name" => "pin",
+            "description" => __("Select or upload pin icon.", ANPS_TEMPLATE_LANG)
+        ),
+        array(
+            "type" => "textarea",
+            "heading" => __("Info", ANPS_TEMPLATE_LANG),
+            "param_name" => "info",
+            "description" => __("Enter info about location.", ANPS_TEMPLATE_LANG)
+        )
+    )
+) );
+/* END VC Google maps advanced item */
 /* VC vimeo */
 vc_map( array(
    "name" => __("Vimeo", ANPS_TEMPLATE_LANG),

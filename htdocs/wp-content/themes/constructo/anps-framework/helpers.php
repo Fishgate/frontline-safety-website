@@ -76,6 +76,8 @@ function anps_header_media_single($id, $image_class="") {
     return $header_media;
 }
 function anps_get_header() {
+    /* Get fullscreen page option */
+    $page_heading_full = get_post_meta(get_queried_object_id(), $key ='anps_page_heading_full', $single = true ); 
     
     //Let's get menu type   
     if (is_front_page() == "true") {
@@ -90,10 +92,9 @@ function anps_get_header() {
     $header_position_class = " relative";
     $header_bg_style_class = " bg-normal";
     $absoluteheader = "false";
-
-    
+        
     //Header classes and variables 
-    if($anps_menu_type == "1") {
+    if($anps_menu_type == "1" || (isset($page_heading_full)&&$page_heading_full=="on")) {
         $menu_type_class = " style-1";
         $header_position_class = " absolute";
         $header_bg_style_class = " bg-transparent";
@@ -140,7 +141,7 @@ function anps_get_header() {
     <?php endif; ?>
 
     <?php //added option for transparent top bar menu type 1 (24.2.2015)
-    if($anps_menu_type == "1" and (get_option('topmenu_style') == '1')) : ?>
+    if(($anps_menu_type == "1" || (isset($page_heading_full)&&$page_heading_full=="on"))&& (get_option('topmenu_style') == '1')) : ?>
     <div class="transparent top-bar<?php if($topmenu_style=="2") {echo " style-2";} ?>">
         <?php anps_get_top_bar(); ?>
     </div>
@@ -148,7 +149,7 @@ function anps_get_header() {
 
 
     <?php //topmenu
-    if($anps_menu_type == "2" and (get_option('topmenu_style') == '1')) : ?>
+    if($anps_menu_type == "2" && (get_option('topmenu_style') == '1') && (!isset($page_heading_full) || $page_heading_full=="")) : ?>
     <div class="top-bar<?php if($topmenu_style=="2") {echo " style-2";} ?>">
         <?php anps_get_top_bar(); ?>
     </div>
@@ -171,11 +172,11 @@ function anps_get_header() {
 
     <?php  //pushdown class adjusts header to be 60px from the top, so there is a place for an absolute positioned top-bar
     $pushdown = "";
-    if($anps_menu_type == "1" and (get_option('topmenu_style') == '1')) {
+    if($anps_menu_type == "1" && (get_option('topmenu_style') == '1') || (isset($page_heading_full)&&$page_heading_full=="on")) {
         $pushdown = " push-down";
     }; ?>
 
-    <?php $anps_header_styles = $sticky_menu_class . $menu_type_class . $header_position_class . $header_bg_style_class . $has_sticky_class . $pushdown;?>
+    <?php $anps_header_styles = esc_attr($sticky_menu_class) . esc_attr($menu_type_class) . esc_attr($header_position_class) . esc_attr($header_bg_style_class) . esc_attr($has_sticky_class) . esc_attr($pushdown);?>
 
 
     <?php //search ?>
@@ -186,7 +187,7 @@ function anps_get_header() {
     <?php endif; ?>
 
     <header class="site-header <?php echo $anps_header_styles ?>">
-        <div class="nav-wrap<?php echo $menu_left_center_right_class; ?>">
+        <div class="nav-wrap<?php echo esc_attr($menu_left_center_right_class); ?>">
             <div class="container"><?php anps_get_sticky_logo() . anps_get_site_header();?></div>
         </div>  
         <div class="sticky-holder"></div>   
@@ -209,7 +210,7 @@ function anps_get_header() {
         } else {
             $disable_single_page = get_post_meta(get_queried_object_id(), $key ='anps_disable_heading', $single = true );
         }
-        if(!$disable_single_page=="1") : 
+        if(!$disable_single_page=="1" && (!isset($page_heading_full) || $page_heading_full=="")) : 
             if(is_front_page()==false && !isset($anps_options_data['disable_heading'])) : 
                 global $anps_media_data;
                 $style = "";
@@ -252,42 +253,96 @@ function anps_get_header() {
                 ?>
                 <div class='page-heading <?php echo esc_attr($class); ?>'<?php echo $style; ?>>
                     <div class='container'>
-                        <?php if (is_home() && !is_front_page()) { 
-                            echo "<h1>".get_the_title(get_option('page_for_posts'))."</h1>";                       
-                        } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_shop() ) {
-                            echo "<h1>".get_the_title(get_option('woocommerce_shop_page_id'))."</h1>";
-                        } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_product_category() ) {
-                            echo "<h1>".single_cat_title("", false)."</h1>";
-                        } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_product_tag() ) {
-                            echo "<h1>".single_cat_title("", false)."</h1>";
-                        } else if( is_archive() ) {
-                            if( is_category() ) {
-                                $cat = get_category(get_queried_object_id());
-                                echo "<h1>".__("Archives for", ANPS_TEMPLATE_LANG) . ' ' . $cat->name . " </h1>";
-                            }
-                            else if(is_author()) {
-                                $author = get_the_author_meta('display_name', get_query_var("author"));
-                                echo "<h1>".__("Posts by", ANPS_TEMPLATE_LANG) . ' ' . $author .  " </h1>";
-                            } elseif(is_tag()) {
-                                $cat = get_tag(get_queried_object_id());
-                                echo "<h1>".$cat->name . "</h1>";
-                            } 
-                            else {
-                                echo "<h1>".__("Archives for", ANPS_TEMPLATE_LANG) . " " . get_the_date('F') . ' ' . get_the_date('Y')."</h1>";
-                            }
-                        } elseif(is_search()) {
-                            echo "<h1>".__("Search results", ANPS_TEMPLATE_LANG)."</h1>";
-                        }
-                        else { ?>
-                        <h1><?php if(get_the_title()) { echo get_the_title(); } else { echo get_the_title($anps_page_data['error_page']); } ?></h1>
-                        <?php } ?>
+                        <?php echo anps_site_title(); ?>
                         <?php if(!isset($anps_options_data['breadcrumbs'])) { echo anps_the_breadcrumb(); } ?>
                     </div>
                 </div>
         <?php endif; ?>
     <?php endif; ?>
+<?php if(isset($page_heading_full)&&$page_heading_full=="on") : ?>
+<div class='page-heading'>
+    <div class='container'>
+        <?php echo anps_site_title(); ?>
+        <?php if(!isset($anps_options_data['breadcrumbs'])) { echo anps_the_breadcrumb(); } ?>
+    </div>
+</div>
+</div>
+<?php endif; ?>
 <?php 
 endif;
+}
+
+function anps_page_full_screen_style() {
+    $full_color_top_bar = get_post_meta(get_queried_object_id(), $key ='anps_full_color_top_bar', $single = true );
+    $full_color_title = get_post_meta(get_queried_object_id(), $key ='anps_full_color_title', $single = true );   
+    $full_hover_color = get_post_meta(get_queried_object_id(), $key ='anps_full_hover_color', $single = true ); 
+    if(!isset($full_color_top_bar) || $full_color_top_bar=="") {
+        $top_bar_color = get_option("top_bar_color");
+    } else {
+        $top_bar_color = $full_color_top_bar;
+    }
+    if(!isset($full_color_title) || $full_color_title=="") {
+        $title_color = get_option("menu_text_color");
+    } else {
+        $title_color = $full_color_title;
+    }
+    if(!isset($full_hover_color) || $full_hover_color=="") {
+        $hover_color = get_option("hovers_color");
+    } else {
+        $hover_color = $full_hover_color;
+    }
+    ?>
+<style>
+.paralax-header > .page-heading .breadcrumbs li a::after, .paralax-header > .page-heading h1, .paralax-header > .page-heading ul.breadcrumbs, .paralax-header > .page-heading ul.breadcrumbs a, .site-navigation ul > li.menu-item > a
+ {color:<?php echo esc_attr($title_color); ?>;}
+
+.transparent.top-bar, .transparent.top-bar a 
+{color:<?php echo esc_attr($top_bar_color); ?>;}
+
+.transparent.top-bar a:hover, .paralax-header > .page-heading ul.breadcrumbs a:hover, .site-navigation ul > li.menu-item > a:hover 
+ {color:<?php echo esc_attr($hover_color); ?>;}   
+
+@media (min-width: 992px) {
+ .nav-wrap:not(.sticky) .fa-search
+ {color:<?php echo esc_attr($title_color); ?>;}
+}
+
+</style>
+
+<?php
+}
+
+function anps_site_title() {
+    if (is_home() && !is_front_page()) { 
+        $title = "<h1>".get_the_title(get_option('page_for_posts'))."</h1>";                       
+    } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_shop() ) {
+        $title = "<h1>".get_the_title(get_option('woocommerce_shop_page_id'))."</h1>";
+    } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_product_category() ) {
+        $title = "<h1>".single_cat_title("", false)."</h1>";
+    } else if( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) && is_product_tag() ) {
+        $title = "<h1>".single_cat_title("", false)."</h1>";
+    } else if( is_archive() ) {
+        if( is_category() ) {
+            $cat = get_category(get_queried_object_id());
+            $title = "<h1>".__("Archives for", ANPS_TEMPLATE_LANG) . ' ' . $cat->name . " </h1>";
+        }
+        else if(is_author()) {
+            $author = get_the_author_meta('display_name', get_query_var("author"));
+            $title = "<h1>".__("Posts by", ANPS_TEMPLATE_LANG) . ' ' . $author .  " </h1>";
+        } elseif(is_tag()) {
+            $cat = get_tag(get_queried_object_id());
+            $title = "<h1>".$cat->name . "</h1>";
+        } 
+        else {
+            $title = "<h1>".__("Archives for", ANPS_TEMPLATE_LANG) . " " . get_the_date('F') . ' ' . get_the_date('Y')."</h1>";
+        }
+    } elseif(is_search()) {
+        $title = "<h1>".__("Search results", ANPS_TEMPLATE_LANG)."</h1>";
+    }
+    else { ?>
+    <?php if(get_the_title()) { $title = "<h1>".get_the_title()."</h1>"; } else { $title = "<h1>".get_the_title($anps_page_data['error_page'])."</h1>"; } ?>
+    <?php }
+    return $title;
 }
 
 function anps_get_sticky_logo() { 
@@ -325,15 +380,15 @@ function anps_the_breadcrumb() {
             }
         }
         elseif (is_page()) { 
-            if(isset($post->post_parent)) { 
+            if(isset($post->post_parent) && ($post->post_parent!=0 || $post->post_parent!="")) { 
                 $parent_id  = $post->post_parent;
                 while ($parent_id) {
                     $page = get_page($parent_id);
                     $breadcrumbs[] = '<li><a href="' . get_permalink($page->ID) . '">' . get_the_title($page->ID) . '</a></li>';
                     $parent_id  = $page->post_parent;
-                }
+                } 
                 for($i=count($breadcrumbs);$i>=0;$i--) {
-                    $return_val .= $breadcrumbs[$i];
+                    $return_val .= isset($breadcrumbs[$i]) ? $breadcrumbs[$i] : null;
                 }
                 $return_val .= "<li>".get_the_title()."</li>";
             } else {
@@ -393,19 +448,6 @@ function anps_get_top_bar() {
     <span class="close fa fa-chevron-down"></span>
     <?php
 }
-/*function anps_blog_image_size($id) {
-    $left_sidebar = get_post_meta($id, 'sbg_selected_sidebar', true);
-    $right_sidebar = get_post_meta($id, 'sbg_selected_sidebar_replacement', true);
-    if((isset($left_sidebar) && $left_sidebar!="0") && (isset($right_sidebar) && $right_sidebar!="0")) { 
-        $blog_image = 'blog-two-sidebar';
-    } elseif((isset($left_sidebar) && $left_sidebar!="0") || (isset($right_sidebar) && $right_sidebar!="0")) { 
-        $blog_image = 'large';
-    } else { 
-        $blog_image = 'blog-no-sidebar';
-    }
-    return $blog_image;
-}
-add_action('init', 'anps_blog_image_size');*/
 
 function anps_is_responsive($rtn)  {
     global $anps_options_data;   
@@ -435,18 +477,17 @@ function anps_body_style() {
     
     if ( $anps_options_data['pattern'] == '0' ) {
         if(isset($anps_options_data['type']) && $anps_options_data['type'] == "custom color") {
-            echo ' style="background-color: ' . $anps_options_data['bg_color'] . ';"';
+            echo ' style="background-color: ' . esc_attr($anps_options_data['bg_color']) . ';"';
         }else if (isset($anps_options_data['type']) && $anps_options_data['type'] == "stretched") {
-            echo ' style="background: url(' . $anps_options_data['custom_pattern'] . ') center center fixed;background-size: cover;     -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"';
+            echo ' style="background: url(' . esc_url($anps_options_data['custom_pattern']) . ') center center fixed;background-size: cover;     -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover;"';
         } else {
-            echo ' style="background: url(' . $anps_options_data['custom_pattern'] . ')"';
+            echo ' style="background: url(' . esc_url($anps_options_data['custom_pattern']) . ')"';
         }
     } 
 }
 function anps_theme_after_styles() {
     if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' );
     
-    get_template_part("includes/google_analytics");
     get_template_part("includes/shortcut_icon");
 }
 /* Return site logo */
@@ -454,7 +495,9 @@ function anps_get_logo() {
     global $anps_media_data;
     $first_page_logo = get_option('anps_front_logo', '');
     $menu_type = get_option('anps_menu_type');
-    //$size_sticky = getimagesize($anps_media_data['sticky-logo']);
+    $page_heading_full = get_post_meta(get_queried_object_id(), $key ='anps_page_heading_full', $single = true );
+    $full_screen_logo = get_post_meta(get_queried_object_id(), $key ='anps_full_screen_logo', $single = true );
+
     $size_sticky = array(120, 120);
     if( ! $size_sticky ) {
         $size_sticky = array(120, 120);
@@ -474,6 +517,9 @@ function anps_get_logo() {
     } 
     else { $logo_width .='px';
     }
+    if(isset($page_heading_full) && $page_heading_full=="on" && isset($full_screen_logo) && $full_screen_logo!="0") : ?>
+        <a href="<?php echo esc_url(home_url("/")); ?>"><img style="width: <?php echo esc_attr($logo_width); ?>; height: <?php echo esc_attr($logo_height); ?>px" alt="Site logo" src="<?php echo esc_url($full_screen_logo); ?>"></a>
+    <?php else :
     if(($menu_type==1 || $menu_type==3) && $first_page_logo && (is_front_page())) : ?>
         <a href="<?php echo esc_url(home_url("/")); ?>"><img style="width: <?php echo esc_attr($logo_width); ?>; height: <?php echo esc_attr($logo_height); ?>px" alt="Site logo" src="<?php echo esc_url($first_page_logo); ?>"></a>
     <?php
@@ -482,6 +528,7 @@ function anps_get_logo() {
     <?php else: ?>
         <a href="<?php echo esc_url(home_url("/")); ?>"><img style="width: <?php echo esc_attr($logo_width); ?>; height: <?php echo esc_attr($logo_height); ?>px" alt="Site logo" src="http://anpsthemes.com/constructo/wp-content/uploads/2014/12/constructo-logoV4.png"></a>        
     <?php endif;
+    endif;
 }
 /* Tags and author */
 function anps_tagsAndAuthor() {
@@ -821,12 +868,6 @@ function anps_custom_excerpt_more($output) {
 add_filter('gallery_style', 'anps_remove_gallery_css');
 function anps_remove_gallery_css($css) {
     return preg_replace("#<style type='text/css'>(.*?)</style>#s", '', $css);
-}
-/* WIDGET: Remove recent comments sytle */
-add_action('widgets_init', 'anps_remove_recent_comments_style');
-function anps_remove_recent_comments_style() {
-    global $wp_widget_factory;
-    remove_action('wp_head', array($wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style'));
 }
 /* Prints HTML with meta information for the current post-date/time and author. */
 if (!function_exists('widebox_posted_on')) :    

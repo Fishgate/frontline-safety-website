@@ -78,17 +78,29 @@ switch(get_option('font_source_navigation')) {
   @font-face {
     font-family: '<?php echo esc_attr($fonts); ?>';
     src: url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($fonts); ?>.eot');
-    src: <?php foreach(anps_getExtCustomFonts($fonts) as $item) : ?> 
-                    <?php $explode_item = explode(".", $item);                     
+    src: <?php $i=0;
+               $fonts_count = count(anps_getExtCustomFonts($fonts)); 
+               foreach(anps_getExtCustomFonts($fonts) as $item) : ?> 
+                    <?php $explode_item = explode(".", $item);  
+                    $i++;
+                    if($i==$fonts_count) {
+                        $separator = ";";
+                    } else {
+                        $separator = ",";
+                    }
                     if($explode_item[1]=='eot') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype'),
-                    <?php endif; 
-                    if($explode_item[1]=='woff') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff') format('woff'),
-                    <?php endif; 
-                    if($explode_item[1]=='ttf') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.ttf') format('truetype');
-                <?php endif; 
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff') format('woff')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='otf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.otf') format('opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='ttf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.ttf') format('ttf')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff2') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff2') format('woff2')<?php echo $separator; ?>
+                    <?php else :
+                        continue;
+                    endif;                                      
                 endforeach; ?>
   }
 <?php endif; ?>
@@ -96,17 +108,29 @@ switch(get_option('font_source_navigation')) {
   @font-face {
     font-family: '<?php echo esc_attr($fonts2); ?>';
     src: url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($fonts2); ?>.eot');
-    src: <?php foreach(anps_getExtCustomFonts($fonts2) as $item) : ?> 
-                    <?php $explode_item = explode(".", $item);                     
+    src: <?php  $i=0;
+                $fonts_count = count(anps_getExtCustomFonts($fonts2));
+                foreach(anps_getExtCustomFonts($fonts2) as $item) : ?> 
+                    <?php $explode_item = explode(".", $item);  
+                    $i++;
+                    if($i==$fonts_count) {
+                        $separator = ";";
+                    } else {
+                        $separator = ",";
+                    }
                     if($explode_item[1]=='eot') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype'),
-                    <?php endif; 
-                    if($explode_item[1]=='woff') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff') format('woff'),
-                    <?php endif; 
-                    if($explode_item[1]=='ttf') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.ttf') format('truetype');
-                <?php endif; 
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff') format('woff')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='otf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.otf') format('opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='ttf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.ttf') format('ttf')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff2') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff2') format('woff2')<?php echo $separator; ?>
+                    <?php else :
+                        continue;
+                    endif; 
                 endforeach; ?>
   }
 <?php endif; ?>
@@ -116,17 +140,29 @@ switch(get_option('font_source_navigation')) {
   @font-face {
     font-family: '<?php echo esc_attr($font_navigation); ?>';
     src: url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_url($font_navigation); ?>.eot');
-    src: <?php foreach(anps_getExtCustomFonts($font_navigation) as $item) : ?> 
-                    <?php $explode_item = explode(".", $item);                     
+    src: <?php  $i=0;
+                $fonts_count = count(anps_getExtCustomFonts($font_navigation));
+                foreach(anps_getExtCustomFonts($font_navigation) as $item) : ?> 
+                    <?php $explode_item = explode(".", $item);  
+                    $i++;
+                    if($i==$fonts_count) {
+                        $separator = ";";
+                    } else {
+                        $separator = ",";
+                    }
                     if($explode_item[1]=='eot') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_url($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype'),
-                    <?php endif; 
-                    if($explode_item[1]=='woff') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_url($explode_item[0]); ?>.woff') format('woff'),
-                    <?php endif; 
-                    if($explode_item[1]=='ttf') : ?>
-                    url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_url($explode_item[0]); ?>.ttf') format('truetype');
-                <?php endif; 
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.eot?#iefix') format('embedded-opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff') format('woff')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='otf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.otf') format('opentype')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='ttf') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.ttf') format('ttf')<?php echo $separator; ?>
+                    <?php elseif($explode_item[1]=='woff2') : ?>
+                        url('<?php echo get_template_directory_uri(); ?>/fonts/<?php echo esc_attr($explode_item[0]); ?>.woff2') format('woff2')<?php echo $separator; ?>
+                    <?php else :
+                        continue;
+                    endif;
                 endforeach; ?>
   }
 <?php endif; ?>
@@ -455,7 +491,9 @@ color:#fff;
 
 body,
 .alert .close,
-.post header {
+.post header,
+#lang_sel_list a.lang_sel_sel, #lang_sel_list ul a, #lang_sel_list_list ul a:visited,
+.widget_icl_lang_sel_widget #lang_sel ul li ul li a, .widget_icl_lang_sel_widget #lang_sel a {
    font-family: <?php if($fonts2=="titillium"){echo "titillium-regular";} else {echo esc_attr($fonts2);}?>;
 }
 
@@ -518,14 +556,14 @@ h6.style-3,
 
 /*Top Bar*/
 
-.top-bar, .top-bar.style-2, header.site-header div.top-bar div.container ul li.widget-container ul li a, .top-bar .close {
+.top-bar, .top-bar.style-2, header.site-header div.top-bar div.container ul li.widget-container ul li a, .top-bar .close, .top-bar .widget_icl_lang_sel_widget #lang_sel ul li ul li a, .top-bar .widget_icl_lang_sel_widget #lang_sel a {
   color: <?php echo esc_attr($top_bar_color); ?>;
 }
 header.site-header div.top-bar div.container ul li.widget-container ul li a:hover {
  color:  <?php echo esc_attr($hovers_color); ?>;
 } 
 
-.top-bar, .top-bar.style-2, .transparent.top-bar.open > .container  {
+.top-bar, .top-bar.style-2, .transparent.top-bar.open > .container, .top-bar .widget_icl_lang_sel_widget #lang_sel ul li ul li a, .top-bar .widget_icl_lang_sel_widget #lang_sel a  {
   background: <?php echo esc_attr($top_bar_bg_color); ?>;
 }
 
@@ -673,21 +711,21 @@ font-size: <?php echo esc_attr($menu_font_size); ?>px;
 }
 
 @media (min-width: 993px) {
-.nav-wrap.sticky .site-navigation ul > li.menu-item > a {
-  color: <?php echo esc_attr($menu_text_color); ?>;
-}
-}
+	.nav-wrap.sticky .site-navigation ul > li.menu-item > a {
+	  color: <?php echo esc_attr($menu_text_color); ?>;
+	}
 
-.home .site-navigation > ul > li.menu-item > a, .home .nav-wrap .fa-search, body.home.boxed .nav-wrap .fa-search  {
-  color: <?php echo esc_attr($anps_front_text_color); ?>;
+	.home .site-navigation > ul > li.menu-item > a, .home .nav-wrap .fa-search, body.home.boxed .nav-wrap .fa-search  {
+	  color: <?php echo esc_attr($anps_front_text_color); ?>;
+	}
+
+	.home .site-navigation ul > li.menu-item > a:hover, .home .site-navigation ul > li.current_page_item > a, .home .nav-wrap .fa-search:hover, .home .site-navigation > ul > li.current-menu-item.current_page_item > a {
+	  color:  <?php echo esc_attr($anps_front_text_hover_color); ?>;
+	}
 }
 
 .site-navigation ul > li.menu-item > a:hover, .site-navigation ul > li.current_page_item > a, .nav-wrap.sticky .site-navigation ul > li.menu-item > a:hover, .nav-wrap.sticky .site-navigation ul > li.current-menu-item > a {
   color:  <?php echo esc_attr($hovers_color); ?>;
-}
-
-.home .site-navigation ul > li.menu-item > a:hover, .home .site-navigation ul > li.current_page_item > a, .home .nav-wrap .fa-search:hover, .home .site-navigation > ul > li.current-menu-item.current_page_item > a {
-  color:  <?php echo esc_attr($anps_front_text_hover_color); ?>;
 }
 
 
